@@ -8,6 +8,8 @@ import vn.finflow.api.auth.dto.request.SignUpRequest;
 import vn.finflow.api.auth.dto.response.UserResponseDTO;
 import vn.finflow.api.auth.repository.AuthRepository;
 import vn.finflow.api.common.entity.Users;
+import vn.finflow.api.common.exception.DuplicateDataException;
+import vn.finflow.api.common.message.ErrorMessage;
 
 @Service
 @RequiredArgsConstructor
@@ -18,21 +20,22 @@ public class AuthService {
     @Transactional
     public UserResponseDTO register(SignUpRequest request){
         if(authRepository.existsByEmail(request.getEmail())){
-            throw new RuntimeException("Email is in used");
+            throw new DuplicateDataException(ErrorMessage.EMAIL_ALREADY_EXISTS);
         }
 
         if(authRepository.existsByPhoneNumber(request.getPhoneNumber())){
-            throw new RuntimeException("Phone number is in used");
+            throw new DuplicateDataException(ErrorMessage.PHONE_ALREADY_EXISTS);
         }
 
+        String passwordEncoded = passwordEncoder.encode(request.getPassword());
         Users user = new Users();
         user.setEmail(request.getEmail());
         user.setPhoneNumber(request.getPhoneNumber());
         user.setAccountName(request.getAccountName());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setDeleteFlag(false);
+        user.setPassword(passwordEncoded);
+        user.setDeleteFlag(true);
 
-        Users savedUser = authRepository.save(user);
+        Users savedUser = authRepository.saveAndFlush(user);
 
         UserResponseDTO result = new UserResponseDTO();
 

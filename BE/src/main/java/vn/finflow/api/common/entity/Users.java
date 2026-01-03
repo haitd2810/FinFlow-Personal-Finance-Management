@@ -22,10 +22,7 @@ public class Users {
     @Column(name = "id", updatable = false, nullable = false)
     private String id;
 
-    @Column(name = "account_number", unique = true, nullable = false, length = 20)
-    private String accountNumber;
-
-    @Column(name = "password", nullable = false, length = 20)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "email", nullable = false, length = 254)
