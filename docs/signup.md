@@ -37,11 +37,8 @@ sequenceDiagram
               API ->> FE: 409 CONFLICT (PHONE_ALREADY_EXISTS)
             else phone number not exists
               SVC ->> ENC: encode(password)
-
-              alt Password encode failed
-                  SVC ->> API: throw PasswordEncodeException
-                  API ->> FE: 500 INTERNAL_SERVER_ERROR
-              else Password encoded
+              ENC ->> SVC: password encoded
+              alt Password encoded
                   SVC ->> SVC: init default fields
                   Note right of SVC: failed_login_attempts=0\nlockout_until=null\ndelete_flag=false\ncreated_at=now
 
