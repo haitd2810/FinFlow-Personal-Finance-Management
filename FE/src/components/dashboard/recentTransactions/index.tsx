@@ -1,5 +1,5 @@
 import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
-import { useFormat } from "../../../../hooks/useFormat";
+import { useFormat } from "../../../hooks/useFormat";
 export type Transaction = {
   id: string;
   type: string;

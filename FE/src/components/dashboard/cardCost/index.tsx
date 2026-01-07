@@ -1,7 +1,7 @@
 import { ArrowDownCircle } from "lucide-react";
-import { Card } from "../../../../ui/card";
+import { Card } from "../../../ui/card";
 import { ReactElement } from "react";
-import { useFormat } from "../../../../hooks/useFormat";
+import { useFormat } from "../../../hooks/useFormat";
 
 export type Props = {
   totalCost: number;

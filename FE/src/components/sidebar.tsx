@@ -22,7 +22,7 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 flex flex-col">
+    <aside className="w-64 bg-white border-r border-gray-200 flex flex-col h-full">
       {/* Header */}
       <div className="p-6 border-b border-gray-200">
         <h1 className="text-emerald-600 text-xl font-bold">
@@ -60,7 +60,7 @@ export function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-4 border-t border-gray-200 absolute left-0 bottom-0 w-full">
         <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg p-4 text-white">
           <p className="text-sm opacity-90">Tổng Tài Sản</p>
           <p className="text-2xl mt-1">0 ₫</p>

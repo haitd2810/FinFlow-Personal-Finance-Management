@@ -8,7 +8,7 @@ export default function SidebarLayout({
 }) {
   return (
     <div className="flex h-screen overflow-hidden">
-      <aside className="w-64 flex-shrink-0">
+      <aside className="w-64 flex-shrink-0 relative">
         <Sidebar />
       </aside>
 
