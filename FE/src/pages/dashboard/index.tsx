@@ -6,10 +6,10 @@ import {
   Wallet,
   TrendingUp,
 } from "lucide-react";
-import { CardDashboard } from "./components/dashboardComponents";
-import { BarChartMonthly } from "./components/chartDataDashboard/barChartMonthly";
-import { PieChartData } from "./components/chartDataDashboard/pieChartData";
-import { RecentTransaction } from "./components/recentTransactions";
+import { CardDashboard } from "@/components/dashboard/cardCost";
+import { BarChartMonthly } from "@/components/dashboard/chartDataDashboard/barChartMonthly";
+import { PieChartData } from "@/components/dashboard/chartDataDashboard/pieChartData";
+import { RecentTransaction } from "@/components/dashboard/recentTransactions";
 import SidebarLayout from "../layouts/sidebar";
 
 

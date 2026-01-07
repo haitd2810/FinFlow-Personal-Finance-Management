@@ -1,5 +1,5 @@
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
-import { useFormat } from "../../../../hooks/useFormat";
+import { useFormat } from "../../../hooks/useFormat";
 
 export type Expense = {
   name: string;

@@ -8,8 +8,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { Card } from "../../../../ui/card";
-import { useFormat } from "../../../../hooks/useFormat";
+import { Card } from "../../../ui/card";
+import { useFormat } from "../../../hooks/useFormat";
 
 export type monthIncome = {
    month: string, income: number, expense: number
