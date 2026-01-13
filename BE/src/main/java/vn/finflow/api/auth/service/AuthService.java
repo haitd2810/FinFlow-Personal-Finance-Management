@@ -4,10 +4,14 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import vn.finflow.api.auth.dto.request.LoginRequest;
 import vn.finflow.api.auth.dto.request.SignUpRequest;
+import vn.finflow.api.auth.dto.response.LoginResponse;
 import vn.finflow.api.auth.dto.response.UserResponseDTO;
 import vn.finflow.api.auth.repository.AuthRepository;
 import vn.finflow.api.common.entity.Users;
+import vn.finflow.api.common.exception.DataNotFoundException;
+import vn.finflow.api.common.exception.UnauthorizedException;
 import vn.finflow.api.common.exception.DuplicateDataException;
 import vn.finflow.api.common.message.ErrorMessage;
 
@@ -16,6 +20,7 @@ import vn.finflow.api.common.message.ErrorMessage;
 public class AuthService {
     private final AuthRepository authRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @Transactional
     public UserResponseDTO register(SignUpRequest request){
@@ -46,5 +51,21 @@ public class AuthService {
         result.setCreatedAt(savedUser.getCreatedAt());
 
         return result;
+    }
+
+    public LoginResponse authenticate(LoginRequest request){
+        var user = authRepository.findByEmailAndDeleteFlagFalse(request.getEmail())
+                .orElseThrow(() -> new DataNotFoundException(ErrorMessage.USER_NOT_EXISTED));
+
+        boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
+        if(!authenticated){
+            throw new UnauthorizedException(ErrorMessage.INVALID_CREDENTIALS);
+        }
+
+        var token = jwtService.generateAccessToken(user);
+
+        return LoginResponse.builder()
+                .accessToken(token)
+                .build();
     }
 }

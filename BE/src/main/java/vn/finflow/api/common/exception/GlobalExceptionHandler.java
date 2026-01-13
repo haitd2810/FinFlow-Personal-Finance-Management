@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import vn.finflow.api.common.dto.APIResponse;
 import vn.finflow.api.common.message.ErrorMessage;
@@ -44,6 +43,32 @@ public class GlobalExceptionHandler {
                                 HttpStatus.BAD_REQUEST.value(),
                                 ErrorMessage.VALIDATION_ERROR,
                                 errors
+                        )
+                );
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<APIResponse<Object>> handleUnauthorized(UnauthorizedException ex){
+        return ResponseEntity.
+                status(HttpStatus.UNAUTHORIZED)
+                .body(
+                        APIResponse.error(
+                                HttpStatus.UNAUTHORIZED.value(),
+                                ex.getMessage(),
+                                null
+                        )
+                );
+    }
+
+    @ExceptionHandler(DataNotFoundException.class)
+    public ResponseEntity<APIResponse<Object>> handleDataNotFound(DataNotFoundException ex){
+        return ResponseEntity.
+                status(HttpStatus.NOT_FOUND)
+                .body(
+                        APIResponse.error(
+                                HttpStatus.NOT_FOUND.value(),
+                                ex.getMessage(),
+                                null
                         )
                 );
     }
