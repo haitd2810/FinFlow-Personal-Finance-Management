@@ -13,7 +13,8 @@ import vn.finflow.api.common.entity.Users;
 import vn.finflow.api.common.exception.DataNotFoundException;
 import vn.finflow.api.common.exception.UnauthorizedException;
 import vn.finflow.api.common.exception.DuplicateDataException;
-import vn.finflow.api.common.message.ErrorMessage;
+
+import static vn.finflow.api.common.message.ErrorMessage.*;
 
 @Service
 @RequiredArgsConstructor
@@ -25,11 +26,11 @@ public class AuthService {
     @Transactional
     public UserResponseDTO register(SignUpRequest request){
         if(authRepository.existsByEmail(request.getEmail())){
-            throw new DuplicateDataException(ErrorMessage.EMAIL_ALREADY_EXISTS);
+            throw new DuplicateDataException(EMAIL_ALREADY_EXISTS);
         }
 
         if(authRepository.existsByPhoneNumber(request.getPhoneNumber())){
-            throw new DuplicateDataException(ErrorMessage.PHONE_ALREADY_EXISTS);
+            throw new DuplicateDataException(PHONE_ALREADY_EXISTS);
         }
 
         String passwordEncoded = passwordEncoder.encode(request.getPassword());
@@ -55,11 +56,11 @@ public class AuthService {
 
     public LoginResponse authenticate(LoginRequest request){
         var user = authRepository.findByEmailAndDeleteFlagFalse(request.getEmail())
-                .orElseThrow(() -> new DataNotFoundException(ErrorMessage.USER_NOT_EXISTED));
+                .orElseThrow(() -> new DataNotFoundException(USER_NOT_EXISTED));
 
         boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
         if(!authenticated){
-            throw new UnauthorizedException(ErrorMessage.INVALID_CREDENTIALS);
+            throw new UnauthorizedException(INVALID_CREDENTIALS);
         }
 
         var token = jwtService.generateAccessToken(user);

@@ -1,9 +1,13 @@
 package vn.finflow.api.common.exception;
 
-import java.security.InvalidKeyException;
+import lombok.Getter;
+import vn.finflow.api.common.message.ErrorMessage;
 
+@Getter
 public class DuplicateDataException extends RuntimeException {
-    public DuplicateDataException(String message){
-        super(message);
+    private int code;
+    public DuplicateDataException(ErrorMessage errorMessage){
+        super(errorMessage.getMessage());
+        this.code = errorMessage.getCode();
     }
 }

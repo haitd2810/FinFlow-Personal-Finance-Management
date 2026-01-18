@@ -1,9 +1,20 @@
 package vn.finflow.api.common.message;
 
-public final class ErrorMessage {
-    public static final String VALIDATION_ERROR = "Validation failed";
-    public static final String EMAIL_ALREADY_EXISTS = "Email already exists";
-    public static final String PHONE_ALREADY_EXISTS = "Phone already exists";
-    public static final String USER_NOT_EXISTED = "User is not existed";
-    public static final String INVALID_CREDENTIALS = "Unauthenticated";
+import lombok.Getter;
+
+@Getter
+public enum ErrorMessage {
+
+    VALIDATION_ERROR(9999,"Validation failed"),
+    EMAIL_ALREADY_EXISTS(101,"Email already exists"),
+    PHONE_ALREADY_EXISTS(102,"Phone already exists"),
+    USER_NOT_EXISTED(103,"User is not existed"),
+    INVALID_CREDENTIALS(104, "Unauthenticated");
+
+    int code;
+    String message;
+    ErrorMessage(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
 }
