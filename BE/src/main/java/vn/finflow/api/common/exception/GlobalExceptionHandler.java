@@ -6,10 +6,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import vn.finflow.api.common.dto.APIResponse;
-import vn.finflow.api.common.message.ErrorMessage;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static vn.finflow.api.common.message.ErrorMessage.VALIDATION_ERROR;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -21,7 +22,8 @@ public class GlobalExceptionHandler {
                         APIResponse.error(
                                 HttpStatus.CONFLICT.value(),
                                 ex.getMessage(),
-                                null
+                                null,
+                                ex.getCode()
                         )
                 );
     }
@@ -41,8 +43,9 @@ public class GlobalExceptionHandler {
                 .body(
                         APIResponse.error(
                                 HttpStatus.BAD_REQUEST.value(),
-                                ErrorMessage.VALIDATION_ERROR,
-                                errors
+                                VALIDATION_ERROR.getMessage(),
+                                errors,
+                                VALIDATION_ERROR.getCode()
                         )
                 );
     }
@@ -55,7 +58,8 @@ public class GlobalExceptionHandler {
                         APIResponse.error(
                                 HttpStatus.UNAUTHORIZED.value(),
                                 ex.getMessage(),
-                                null
+                                null,
+                                ex.getCode()
                         )
                 );
     }
@@ -68,7 +72,8 @@ public class GlobalExceptionHandler {
                         APIResponse.error(
                                 HttpStatus.NOT_FOUND.value(),
                                 ex.getMessage(),
-                                null
+                                null,
+                                ex.getCode()
                         )
                 );
     }

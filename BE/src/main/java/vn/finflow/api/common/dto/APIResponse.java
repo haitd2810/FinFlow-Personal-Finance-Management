@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class APIResponse<T> {
     private String message;
+    private int code;
     private T data;
     private Object errors;
     private int status;
@@ -28,11 +29,12 @@ public class APIResponse<T> {
                 .build();
     }
 
-    public static <T> APIResponse<T> error(int status,String message, Object errors){
+    public static <T> APIResponse<T> error(int status,String message, Object errors, int code){
         return APIResponse.<T>builder()
                 .status(status)
                 .message(message)
                 .errors(errors)
+                .code(code)
                 .build();
     }
 }
